@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> Jim Hoskins :  Different Stacks: Treehouse Code Challenges</title>
+    <link rel="stylesheet" href="/site.css">
+  </head>
+  <body>
+    <div class="topbar">
+  <div class="fill">
+    <div class="container">
+      <a class="brand" href="/" >Jim Hoskins</a>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <!--       
+        <li><a href="/about-me.html">About Me</a></li>
+        <li><a href="/projects.html">Projects</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        -->
+      </ul>
+      <ul class="secondary-nav">
+        <li><a href="http://twitter/jimrhoskins">@jimrhoskins</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    <section class="container post">
+      <div class="row">
+        <article class="span10">
+        <h1>Different Stacks: Treehouse Code Challenges</h1>
+        <p><em>The Different Stacks series covers the different software and library stacks I have experimented with, and how it goes together</em></p>
+
+<p>While we were getting ready to launch <a href='http://teamtreehouse.com/'>Treehouse</a>, I was given the opportunity to build a brand new component, Code Challenges. We had already decided to incorporate badges via multiple choice quizzes in Treehouse, but then it became clear that we really needed a way to demonstrate your knowledge by actually coding. Since Alan had more than enough on his plate, and I was in search of a project, Code Challenges became my baby.</p>
+
+<p>We decided that the challenges should be developed as a separate application that would be embedded into the Treehouse pages via an iframe or JavaScript. This had two main benefits: first I could develop independently of the main Treehouse code base, which was iterating extremely fast, but more importantly I had full control over what software, libraries, and frameworks I would use to build. Here is the stack I ended up going with.</p>
+
+<ul>
+<li><a href='http://nodejs.org'>NodeJS</a></li>
+
+<li><a href='http://expressjs.com'>ExpressJS</a></li>
+
+<li><a href='http://coffeescript.org'>CoffeeScript</a> (everywhere)</li>
+
+<li><a href='http://couchdb.org'>CouchDB</a></li>
+
+<li><a href='http://dojotoolkit.org'>Dojo / Dijit</a></li>
+
+<li><a href='http://ace.ajax.org'>Ace</a></li>
+
+<li><a href='http://requirejs.org'>RequireJS</a></li>
+
+<li><a href='http://jade-lang.com'>Jade</a></li>
+
+<li><a href='http://learnboost.github.com/stylus/'>Stylus</a></li>
+
+<li><a href='http://www.handlebarsjs.com/'>Handlebars</a></li>
+</ul>
+
+<p>Now I want to explain how these components worked together in a real application.</p>
+
+<h2 id='requirejs__dojo__ace_editor'>Require.JS + Dojo + Ace Editor</h2>
+
+<p>The code challenge interface is a fairly complex interface with many components including tabs, a rich code editor with multiple instances , and challenge interface. All of these components need to be able to communicate effectively. There are a lot of moving parts in th application, so organizing all this code is important. One huge js file isn&#8217;t going to cut it. I decided to give <a href='http://requirejs.org'>require.js</a> a try. This provided me the ability to split my code into multiple modules, with all of the dependency management handled for me.</p>
+
+<p>Require.js was a great choice, particularly because my two main external libraries (<a href='http://ace.ajax.org'>Ace</a> and <a href='http://dojotoolkit.org'>Dojo</a>) follow the same <a href='https://github.com/amdjs/amdjs-api/wiki/AMD'>Asynchronous Module Definition</a> pattern that require.js follows. This means instead of loading a large compiled file that includes all of the library into my app, I can require components from ace and dojo just like I would require any of my own modules.</p>
+
+<p>Getting ace and dojo into my project was a bit tricky. The require.js website has a guide to using dojo with require. It really just came down to checking out the correct tag of the libraries.</p>
+
+<p>This combination was nice because I don&#8217;t have any global objects to rely on from my modules, so the dependency graph is fairly easy to reason about.</p>
+
+<h2 id='coffeescript__dojo'>CoffeeScript + Dojo</h2>
+
+<p>I decided to commit to using <span>CoffeeScript</span> throughout this project. I had experimented with CoffeeScript before, but I wanted to see how well it held up in a larger project. It&#8217;s awesome, and it changes the way you program and think about problems. One of the biggest shifts is how CoffeeScript comprehensions make <span>map</span> and <span>select/filter</span> operations easy without another library like <a href='http://documentcloud.github.com/underscore/'>underscore</a>.</p>
+
+<p>My favorite sugar in CoffeeScript comes from its class syntax. It is nice because it provides a pretty familiar syntax for creating classes (or rather constructor functions) in JavaScript, while having the implementation be pretty much the standard for prototypal inheritance. It even implements a <code>super</code> keyword that works very well.</p>
+
+<p>One of the surprise benefits of the class sugar is how it easily replaced dojo&#8217;s subclassing mechanism. Most of my classes are subclasses of the various dojo widgets that override certain callbacks in the lifecycle to serve my application needs. The suggested way of subclassing in dojo is the following.</p>
+
+<pre><code>dojo.provide(&#39;mynamespace.MyButton);
+dojo.define(&#39;mynamespace.MyButton&#39;, dijit.Button {
+  postCreate: function () {
+    // widget element has been created, setup in here
+  }
+});</code></pre>
+
+<p>This pattern is by no means the worst implementation I&#8217;ve seen, but one thing I don&#8217;t care for is the provide/define that will place my class into the global repository of classes. With require, I want all my classes to be local to the module, then specifically exported. The other complaint is that dojo can&#8217;t name the constructor function after your class, so when debugging, the default &#8220;class&#8221; name for an object won&#8217;t be MyButton, but something more cryptic. CoffeeScript classes actually produce the correctly named constructor function, so the representation in the console or <code>.toString()</code> will match the name of you class.</p>
+
+<p>The CoffeeScript that would create a class is this, and it not only looks cleaner, but also addresses the scope and naming problems.</p>
+
+<pre><code>class MyButton extends dijit.Button
+  postCreate: -&gt;
+    # widget element has been created, setup in here</code></pre>
+
+<p>Bam! The extend keyword works without issue. Without a constructor defined, it will automatically call the parent&#8217;s constructor when <code>new
+MyButton</code> is executed. If I want to override any methods, including the constructor, I can do it very easily. Again the <code>super</code> keyword works as expected.</p>
+
+<h1 id='node__express__couchdb'>Node + Express + CouchDB</h1>
+
+<p><a href='http://nodejs.org'>Node.js</a> powers the server with <a href='http://expressjs.com'>Express</a> handling routes and middleware. I don&#8217;t have much to say about this, it&#8217;s pretty much the standard Node stack, and I have very little serve logic in this app.</p>
+
+<p>The one awesome component that I do want to talk about is <a href='http://couchdb.org'>CouchDB</a>. Couch turns out to be an ideal datastore for the editor because all my queries are key/value lookups. There isn&#8217;t any real searching or complex queries. The data I need to store is pretty varied, as any given challenge template or editing session may have any number of &#8220;files&#8221; associated with it. Converting it to JSON and throwing it into the couch is about as easy as it gets.</p>
+
+<p>Here&#8217;s the cool part: the server doesn&#8217;t have (almost) anything to do with the server. Couch uses HTTP to work with it, and the browser speaks HTTP, so my frontend talks directly to the database.</p>
+
+<p>Due to the <a href='http://en.wikipedia.org/wiki/Same_origin_policy'>same domain policy</a> of the browser, the frontend can&#8217;t talk directly to the database, but it can if the server acts as a dumb proxy to the database. The <a href='https://github.com/nodejitsu/node-http-proxy'>http-proxy</a> library made this trivial to do in Node. There is a little bit of middleware that runs some basic authorization checks on the queries, but that&#8217;s it. There&#8217;s no real &#8220;API&#8221; on my server, just the API of the database exposed through a proxy.</p>
+
+<h1 id='jade__stylus__handlebars'>Jade + Stylus + Handlebars</h1>
+
+<p><a href='http://jade-lang.com'>Jade</a> and <a href='http://www.handlebarsjs.com/'>Handlebars</a> are templating languages. They actually didn&#8217;t get much use in this project since the interface is largely constructed with Dojo widgets. The main server template is basically an empty html page with a couple of JavaScript and CSS includes. I used handlebars in a couple of places where I needed to create some arbitrary HTML and constructing it programatically would have been silly. Both are great.</p>
+
+<p><a href='http://learnboost.github.com/stylus/'>Stylus</a> is a language the compiles to css, much like <a href='http://sass-lang.com/'>SASS</a>, but with an even more minimalistic syntax. It works quite well.</p>
+
+<h1 id='final_thoughts'>Final Thoughts</h1>
+
+<p>Overall I am pretty satisfied with this stack. It has been one of the most organized front-end project I have had the chance to work on. Jumping back in after several weeks away from the code has been pretty painless. It&#8217;s easy to get (re)oriented in the code.</p>
+
+<p>The require.js compiler did have a few quirks that I had to work through when I was getting the app ready for launch. Most of these problems were easy to resolve, and the cost was worth the benefit to me.</p>
+
+<p>What do you think? Have you used any of these technologies in your projects? What are your experiences?</p>
+        </article>
+        <aside class="span6">
+  <div class="well">
+    <article>
+      <img src="/images/jim-hoskins-fights-with-the-robots.jpg" width=100%>
+      <p>
+      I'm Jim Hoskins and I am a web dev and teacher at <a href="http://teamtreehouse.com">Treehouse</a>. This is where I write about coding, the web, or anything else that interests me. You can also read my work at <a href="http://thinkvitamin.com">Think Vitamin</a>.
+      </p>
+    </article>
+    <article>
+      <h3>Me on the Web</h3>
+      <p>
+        <a class="btn success" href="http://teamtreehouse.com/jim">Treehouse</a>
+        <a class="btn primary" href="http://twitter.com/jimrhoskins">Twitter</a>
+        <a class="btn" href="http://github.com/jimrhoskins">Github</a>
+      </p>
+    </article>
+    <article class="recent-posts">
+      <h3>Recent Articles</h3>
+      <ul>
+      
+        <li>
+          <a href=/2012/01/30/different-stacks-treehouse-code-challenges.html>Different Stacks: Treehouse Code Challenges</a>
+        </li>
+      
+      </ul>
+    </article>
+    <article class="twitter">
+      <h3 >
+        Twitter
+      </h3>
+      <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 3,
+  interval: 30000,
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#0064CD',
+      color: '#FFF'
+    },
+    tweets: {
+      background: '#FFFFFF',
+      color: '#333333',
+      links: '#0064CD'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: false,
+    behavior: 'all'
+  }
+}).render().setUser('jimrhoskins').start();
+</script>
+
+    </article>
+  </div>
+</aside>
+
+      </div>
+      <section class="comments row">
+        <div id="disqus_thread" class="span10"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'jimhoskins';
+            var disqus_developer = window.location.host.match(/localhost/);
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </section>
+    </section>
+  </body>
+</html>

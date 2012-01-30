@@ -1,0 +1,27 @@
+---
+layout: post
+title: Blog Archive
+---
+<ul class="unstyled">
+{% for post in site.posts %}
+<li>
+  <span class="date">{{post.date | date_to_string }}</span>
+  <a href="{{post.url}}">{{ post.title }}</a>
+</li>
+{% endfor %}
+</ol>
+<section class="third-party-posts">
+  <h2> My Posts on Other Blogs </h2>
+
+  <article>
+    <a href="http://thinkvitamin.com/author/jimhoskins/">
+      <img src="/images/thinkvitamin_large.png">
+    </a>
+  </article>
+  <article>
+    <a href="http://doctype.tv">
+      <img src="/images/doctype.png">
+    </a>
+  </article>
+
+</section>
