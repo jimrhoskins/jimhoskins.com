@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> Jim Hoskins :  Why Learn Node.js?</title>
+    <link rel="stylesheet" href="/site.css">
+  </head>
+  <body>
+    <div class="topbar">
+  <div class="fill">
+    <div class="container">
+      <a class="brand" href="/" >Jim Hoskins</a>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <!--       
+        <li><a href="/speaking.html">Speaking</a></li>
+        <li><a href="/about-me.html">About Me</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/projects.html">Projects</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        -->
+      </ul>
+      <ul class="secondary-nav">
+        <li><a href="http://twitter/jimrhoskins">@jimrhoskins</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+    <section class="container post">
+      <div class="row">
+        <article class="span10">
+        <h1>Why Learn Node.js?</h1>
+        <p>Every so often I run across a question like this:</p>
+
+<blockquote>
+<p>Why Should I bother learning Node.js? Technology X already solves all my problems.</p>
+</blockquote>
+
+<p>After working with Node.js for the last year or so, and working with Rails, Django, PHP, and others for the past decade, I thought I&#8217;d put down my answer in a blog post, so I can stop retyping it in comment boxes.</p>
+
+<h2 id='what_is_nodejs'>What is Node.js?</h2>
+
+<p>The short answer is Node is &#8220;evented IO for V8 JavaScript&#8221;. Fortunately the official description has been expanded beyond this, because that means nothing to most of us.</p>
+
+<p>To me, Node.js takes JavaScript out of the browser and allows you to build other types of applications, including web app servers. Node isn&#8217;t limited to web app servers, or even just servers, but web app servers are what are most interesting to me, and the focus of this essay.</p>
+
+<p>Node.js is also event driven, or asynchronous, meaning any interaction the leaves the main runtime, like file system calls, database or network calls, and child processes, are handled using callbacks. It is this aspect of Node that makes it interesting. It&#8217;s not the only event driven system in the world, but it is an excellent one since the non-blocking is a core component of Node, meaning any decent library will be build using asynchronous calls. This is important because one blocing call spoils the whole app.</p>
+
+<h2 id='events_callbacks_nonblocking_wtf'>Events? Callbacks? Non-Blocking? WTF?</h2>
+
+<p>This is the important bit, so it&#8217;s analogy time.</p>
+
+<p>Imagine an office where people routinely order supplies through a mail order catalog. There is an assistant responsible for all of the orders for everybody in the office. Our assistent receives a request from an employee, fills out the order form, sends it, waits for delivery, and brings it back to the exployee. Delivery takes about 2 days.</p>
+
+<p>Our assistant, however, is not working very efficiently. When he receives a supply requests, he fills out the form, mails it out, and until the supplies are delivered he stares at his desk. Meanwhile more requests are piling up as he ignores them. &#8221;I&#8217;m busy!&#8221; our assistant proclaims, &#8220;I have to wait for this supply delivery before I can do anything else&#8221;.</p>
+
+<p>Now this is clearly ridiculous, there&#8217;s no reason while the order is being processed he can&#8217;t do other tasks. Imagine if the office wanted to resolve the supply ordering throughput bottleneck by hiring more lazy assistants like this. It would work, but it&#8217;s expensive. Or, the company could try to expidite the delivery time so more supply deliveries could be handled per week. There&#8217;s not much they can do to speed up the mail.</p>
+
+<p>This is how we typically write our applications, or more specifically our web apps. Our app will make a request, and just wait for it, meanwhile it is unable to handle other requests. A database request, or file read, or any other IO takes ages in computer time. How do we handle more than one request at a time? We use threads, which is like hiring another office assistant. Or we use processes, which is like opening a new satellite office. It works, but there is a cost to each thread or process, and most of the time they are idle anyway.</p>
+
+<p>We can do better. What an evented system like Node will do is anytime we have a long running operation where we would just be waiting, we initiate the operation, but instead of waiting, we signal we are available for other tasks. When our operation is complete, we can continue by using a callback function, or continuation.</p>
+
+<p>Instead of saying &#8220;I need to wait for A to finish before I can do B!&#8221;, we say &#8220;I started doing A, when it&#8217;s done, let me know, so I can do B, in the mean time I can work on X, Y, and Z&#8221;. This is all within one process (or one office assistant).</p>
+
+<p>If you have worked with JavaScript in the browser, the idea of callbacks isn&#8217;t new. You use them for AJAX calls, handline events like clicks and keypresses, and things like page load events. It&#8217;s done for the same reason, the browser has only one process, and that not only handles the JavaScript code, but all of the rendering and interactions on the page. That&#8217;s why if you write some very CPU intensive code, like an infinite loop, it locks up your browser. It can only do one thing at a time.</p>
+
+<h2 id='ok_so_its_fast_nodejs_is_web_scale'>Ok, So it&#8217;s fast! Node.js is Web Scale!?</h2>
+
+<p>This post isn&#8217;t about benchmarks or scaling. I&#8217;m not an expert on that, and quite frankly, it won&#8217;t matter for you until it does.</p>
+
+<p>However, the evented system does change the way we handle web requests. Increasing capacity or throughput has typically been handled one or both of the following ways.</p>
+
+<ol>
+<li>Make the time to fulfill a request shorter so you can handle more.</li>
+
+<li>Add more threads to fulfill more requests concurrently. Threads aren&#8217;t free.</li>
+</ol>
+
+<p>So we are all about short requests. What if we didn&#8217;t need to close a request as soon as possible? What could be do? Server to Client pushing of information! Web Sockets.</p>
+
+<p>Typically the server can only communicate to the client in those short moments the client requests something. If it has something to tell the client after that request, tough.</p>
+
+<p>A Web Socket, on the other hand, is a connection that you keep open over a long period, so the server can send data to the browser whenever it wants. Think chat rooms. Well if we need to close requests as soon as possible, Web Sockets don&#8217;t make sense, they need to be open for a while to be useful.</p>
+
+<p>With Node, we can open a bunch of Web Sockets and keep them open, because 99.9% the socket is idle, waiting for the client or server to send some info. In Node we set up callbacks for when information is sent, and then while that Web Socket connection is idle, we can do other things.</p>
+
+<p>It&#8217;s prohibitively expensive to allocate a thread to each Web Socket connection past a few dozen or hundred. RAM ain&#8217;t free. Node can handle thousands of connections (depending on how active they are, of course) without breaking a sweat.</p>
+        </article>
+        <aside class="span6">
+  <div class="well">
+    <article>
+      <img src="/images/jim-hoskins-fights-with-the-robots.jpg" width=100%>
+      <p>
+      I'm Jim Hoskins and I am a web dev and teacher at <a href="http://teamtreehouse.com">Treehouse</a>. This is where I write about coding, the web, or anything else that interests me. You can also read my work at <a href="http://thinkvitamin.com">Think Vitamin</a>.
+      </p>
+    </article>
+    <article>
+      <h3>Me on the Web</h3>
+      <p>
+        <a class="btn success" href="http://teamtreehouse.com/jim">Treehouse</a>
+        <a class="btn primary" href="http://twitter.com/jimrhoskins">Twitter</a>
+        <a class="btn" href="http://github.com/jimrhoskins">Github</a>
+      </p>
+    </article>
+    <article class="recent-posts">
+      <h3>Recent Articles</h3>
+      <ul>
+      
+        <li>
+          <a href=/2012/03/07/why-node.html>Why Learn Node.js?</a>
+        </li>
+      
+        <li>
+          <a href=/2012/02/10/living-on-linode.html>Living on Linode</a>
+        </li>
+      
+        <li>
+          <a href=/2012/01/30/different-stacks-treehouse-code-challenges.html>Different Stacks: Treehouse Code Challenges</a>
+        </li>
+      
+      </ul>
+    </article>
+    <article class="twitter">
+      <h3 >
+        Twitter
+      </h3>
+      <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 3,
+  interval: 30000,
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#0064CD',
+      color: '#FFF'
+    },
+    tweets: {
+      background: '#FFFFFF',
+      color: '#333333',
+      links: '#0064CD'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: false,
+    behavior: 'all'
+  }
+}).render().setUser('jimrhoskins').start();
+</script>
+
+    </article>
+    <article class="treehouse">
+      <h3 >Treehouse</h3>
+      <iframe width="100%" height="320" src="http://goj.im:3333/v1/p/jim?order=recent&amp;count=3&amp;hide_joined=1&amp;view=list" frameborder="0"></iframe>
+    </article>
+  </div>
+</aside>
+
+        aaa
+      </div>
+      <section class="comments row">
+        <div id="disqus_thread" class="span10"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'jimhoskins';
+            var disqus_developer = window.location.host.match(/localhost/);
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </section>
+    </section>
+  </body>
+</html>

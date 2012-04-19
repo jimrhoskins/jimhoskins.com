@@ -13,6 +13,7 @@ module Jekyll
 
       
       `lessc _less/bootstrap.less _site/site.css` 
+      puts 'LESSS!'
       site.static_files << NoFile.new(site, site.source, '', 'site.css')
     end
   
