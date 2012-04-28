@@ -68,11 +68,11 @@ reason about.
 
 ## CoffeeScript + Dojo
 
-I decided to commit to using [CoffeeScript][coffee] throughout this
+I decided to commit to using [CoffeeScript][coffeescript] throughout this
 project. I had experimented with CoffeeScript before, but I wanted to
 see how well it held up in a larger project. It's awesome, and it
 changes the way you program and think about problems. One of the biggest
-shifts is how CoffeeScript comprehensions make [map][map] and [select/filter][select] 
+shifts is how CoffeeScript comprehensions make map and select/filter 
 operations easy without another library like [underscore][underscore].
 
 My favorite sugar in CoffeeScript comes from its class syntax. It is

@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Jim Hoskins :  Living on Linode</title>
-    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href='http://fonts.googleapis.com/css?family=Mako|Oxygen' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <div class="topbar">
-  <div class="fill">
-    <div class="container">
-      <a class="brand" href="/" >Jim Hoskins</a>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/blog.html">Blog</a></li>
-        <!--       
-        <li><a href="/speaking.html">Speaking</a></li>
-        <li><a href="/about-me.html">About Me</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-        <li><a href="/projects.html">Projects</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-        -->
-      </ul>
-      <ul class="secondary-nav">
-        <li><a href="http://twitter/jimrhoskins">@jimrhoskins</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
+    <header class='siteHeader clearfix'>
+      <img src="/images/jim-hoskins-fowa-london-2011.jpg">
+      <hgroup>
+        <h1> Jim Hoskins</h1>
+        <h2> Developer - Teacher - Maker </h2>
+      </hgroup>
 
-    <section class="container post">
-      <div class="row">
-        <article class="span10">
-        <h1>Living on Linode</h1>
-        <p>I&#8217;m tired of having multiple computers to juggle. I have a 27&#8221; iMac at work, my personal 13&#8221; MacBook Air, a 15&#8221; MacBook Pro I have as a backup computer, and a PC I use primarly for gaming, but occasionaly for code. Keeping the environments in sync, managing which projects are where, and just keeping momentum between computers is too much. I don&#8217;t want to worry about if I have pushed my work from my Air to github so I can work on it from my iMac.</p>
+      <nav>
+        <ul>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="/projects.html">Projects</a></li>
+          <li><a href="/">About Me</a></li>
+        </ul>
+      </nav>
+
+      <ul class='me'>
+        <li><a class="twitter" href="https://twitter.com/jimrhoskins" rel="me">Tiwtter: @jimrhoskins</a></li>
+        <li><a class="github" href="https://github.com/jimrhoskins" rel="me">Github: jimrhoskins</a></li>
+        <li><a class="treehouse" href="http://teamtreehouse.com/jim" rel="me">Treehouse: Jim</a></li>
+      </ul>
+    </header>
+    <article>
+      <h1>Living on Linode</h1>
+      
+      <section class="meta">
+        <div class="sharing">
+          <a href="http://news.ycombinator.com/submit" class="hn-share-button">Vote on HN</a>
+        </div>
+        <span class="date">
+          Posted February 10, 2012
+        </span>
+      </section>
+      
+      <p>I&#8217;m tired of having multiple computers to juggle. I have a 27&#8221; iMac at work, my personal 13&#8221; MacBook Air, a 15&#8221; MacBook Pro I have as a backup computer, and a PC I use primarly for gaming, but occasionaly for code. Keeping the environments in sync, managing which projects are where, and just keeping momentum between computers is too much. I don&#8217;t want to worry about if I have pushed my work from my Air to github so I can work on it from my iMac.</p>
 
 <p>Then one day I got a billing email from Linode, for a node I set up a few months ago for a demo in a workshop. I had pretty much forgotten about it, but decided maybe I can migrate my development life to this server, and just live on my VPS.</p>
 
@@ -81,97 +90,14 @@ compdef _workon workon</code></pre>
 <p>I&#8217;ve been running this experiment for about a week, and it&#8217;s very liberating. I planned to stick with it at least through the end of February, but given the results so far I think this may be my new normal.</p>
 
 <p><em>P.S. I wrote this whole post on my server via SSH</em></p>
-        </article>
-        <aside class="span6">
-  <div class="well">
-    <article>
-      <img src="/images/jim-hoskins-fights-with-the-robots.jpg" width=100%>
-      <p>
-      I'm Jim Hoskins and I am a web dev and teacher at <a href="http://teamtreehouse.com">Treehouse</a>. This is where I write about coding, the web, or anything else that interests me. You can also read my work at <a href="http://thinkvitamin.com">Think Vitamin</a>.
-      </p>
     </article>
-    <article>
-      <h3>Me on the Web</h3>
-      <p>
-        <a class="btn success" href="http://teamtreehouse.com/jim">Treehouse</a>
-        <a class="btn primary" href="http://twitter.com/jimrhoskins">Twitter</a>
-        <a class="btn" href="http://github.com/jimrhoskins">Github</a>
-      </p>
-    </article>
-    <article class="recent-posts">
-      <h3>Recent Articles</h3>
-      <ul>
-      
-        <li>
-          <a href=/2012/03/07/why-node.html>Why Learn Node.js?</a>
-        </li>
-      
-        <li>
-          <a href=/2012/02/10/living-on-linode.html>Living on Linode</a>
-        </li>
-      
-        <li>
-          <a href=/2012/01/30/different-stacks-treehouse-code-challenges.html>Different Stacks: Treehouse Code Challenges</a>
-        </li>
-      
-      </ul>
-    </article>
-    <article class="twitter">
-      <h3 >
-        Twitter
-      </h3>
-      <script src="http://widgets.twimg.com/j/2/widget.js"></script>
-<script>
-new TWTR.Widget({
-  version: 2,
-  type: 'profile',
-  rpp: 3,
-  interval: 30000,
-  width: 'auto',
-  height: 300,
-  theme: {
-    shell: {
-      background: '#0064CD',
-      color: '#FFF'
-    },
-    tweets: {
-      background: '#FFFFFF',
-      color: '#333333',
-      links: '#0064CD'
-    }
-  },
-  features: {
-    scrollbar: false,
-    loop: false,
-    live: false,
-    behavior: 'all'
-  }
-}).render().setUser('jimrhoskins').start();
-</script>
-
-    </article>
-    <article class="treehouse">
-      <h3 >Treehouse</h3>
-      <iframe width="100%" height="320" src="http://goj.im:3333/v1/p/jim?order=recent&amp;count=3&amp;hide_joined=1&amp;view=list" frameborder="0"></iframe>
-    </article>
-  </div>
-</aside>
-
-        aaa
-      </div>
-      <section class="comments row">
-        <div id="disqus_thread" class="span10"></div>
-        <script type="text/javascript">
-            var disqus_shortname = 'jimhoskins';
-            var disqus_developer = window.location.host.match(/localhost/);
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      </section>
-    </section>
+    <script>
+      (function(d, t) {
+          var g = d.createElement(t),
+              s = d.getElementsByTagName(t)[0];
+          g.src = '//hnbutton.appspot.com/static/hn.js';
+          s.parentNode.insertBefore(g, s);
+      }(document, 'script'));
+    </script>
   </body>
 </html>

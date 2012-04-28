@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Jim Hoskins :  Different Stacks: Treehouse Code Challenges</title>
-    <link rel="stylesheet" href="/site.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href='http://fonts.googleapis.com/css?family=Mako|Oxygen' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <div class="topbar">
-  <div class="fill">
-    <div class="container">
-      <a class="brand" href="/" >Jim Hoskins</a>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/blog.html">Blog</a></li>
-        <!--       
-        <li><a href="/speaking.html">Speaking</a></li>
-        <li><a href="/about-me.html">About Me</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-        <li><a href="/projects.html">Projects</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-        -->
-      </ul>
-      <ul class="secondary-nav">
-        <li><a href="http://twitter/jimrhoskins">@jimrhoskins</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
+    <header class='siteHeader clearfix'>
+      <img src="/images/jim-hoskins-fowa-london-2011.jpg">
+      <hgroup>
+        <h1> Jim Hoskins</h1>
+        <h2> Developer - Teacher - Maker </h2>
+      </hgroup>
 
-    <section class="container post">
-      <div class="row">
-        <article class="span10">
-        <h1>Different Stacks: Treehouse Code Challenges</h1>
-        <p><em>The Different Stacks series covers the different software and library stacks I have experimented with, and how it goes together</em></p>
+      <nav>
+        <ul>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="/projects.html">Projects</a></li>
+          <li><a href="/">About Me</a></li>
+        </ul>
+      </nav>
+
+      <ul class='me'>
+        <li><a class="twitter" href="https://twitter.com/jimrhoskins" rel="me">Tiwtter: @jimrhoskins</a></li>
+        <li><a class="github" href="https://github.com/jimrhoskins" rel="me">Github: jimrhoskins</a></li>
+        <li><a class="treehouse" href="http://teamtreehouse.com/jim" rel="me">Treehouse: Jim</a></li>
+      </ul>
+    </header>
+    <article>
+      <h1>Different Stacks: Treehouse Code Challenges</h1>
+      
+      <section class="meta">
+        <div class="sharing">
+          <a href="http://news.ycombinator.com/submit" class="hn-share-button">Vote on HN</a>
+        </div>
+        <span class="date">
+          Posted January 30, 2012
+        </span>
+      </section>
+      
+      <p><em>The Different Stacks series covers the different software and library stacks I have experimented with, and how it goes together</em></p>
 
 <p>While we were getting ready to launch <a href='http://teamtreehouse.com/'>Treehouse</a>, I was given the opportunity to build a brand new component, Code Challenges. We had already decided to incorporate badges via multiple choice quizzes in Treehouse, but then it became clear that we really needed a way to demonstrate your knowledge by actually coding. Since Alan had more than enough on his plate, and I was in search of a project, Code Challenges became my baby.</p>
 
@@ -73,7 +82,7 @@
 
 <h2 id='coffeescript__dojo'>CoffeeScript + Dojo</h2>
 
-<p>I decided to commit to using <span>CoffeeScript</span> throughout this project. I had experimented with CoffeeScript before, but I wanted to see how well it held up in a larger project. It&#8217;s awesome, and it changes the way you program and think about problems. One of the biggest shifts is how CoffeeScript comprehensions make <span>map</span> and <span>select/filter</span> operations easy without another library like <a href='http://documentcloud.github.com/underscore/'>underscore</a>.</p>
+<p>I decided to commit to using <a href='http://coffeescript.org'>CoffeeScript</a> throughout this project. I had experimented with CoffeeScript before, but I wanted to see how well it held up in a larger project. It&#8217;s awesome, and it changes the way you program and think about problems. One of the biggest shifts is how CoffeeScript comprehensions make map and select/filter operations easy without another library like <a href='http://documentcloud.github.com/underscore/'>underscore</a>.</p>
 
 <p>My favorite sugar in CoffeeScript comes from its class syntax. It is nice because it provides a pretty familiar syntax for creating classes (or rather constructor functions) in JavaScript, while having the implementation be pretty much the standard for prototypal inheritance. It even implements a <code>super</code> keyword that works very well.</p>
 
@@ -120,97 +129,14 @@ MyButton</code> is executed. If I want to override any methods, including the co
 <p>The require.js compiler did have a few quirks that I had to work through when I was getting the app ready for launch. Most of these problems were easy to resolve, and the cost was worth the benefit to me.</p>
 
 <p>What do you think? Have you used any of these technologies in your projects? What are your experiences?</p>
-        </article>
-        <aside class="span6">
-  <div class="well">
-    <article>
-      <img src="/images/jim-hoskins-fights-with-the-robots.jpg" width=100%>
-      <p>
-      I'm Jim Hoskins and I am a web dev and teacher at <a href="http://teamtreehouse.com">Treehouse</a>. This is where I write about coding, the web, or anything else that interests me. You can also read my work at <a href="http://thinkvitamin.com">Think Vitamin</a>.
-      </p>
     </article>
-    <article>
-      <h3>Me on the Web</h3>
-      <p>
-        <a class="btn success" href="http://teamtreehouse.com/jim">Treehouse</a>
-        <a class="btn primary" href="http://twitter.com/jimrhoskins">Twitter</a>
-        <a class="btn" href="http://github.com/jimrhoskins">Github</a>
-      </p>
-    </article>
-    <article class="recent-posts">
-      <h3>Recent Articles</h3>
-      <ul>
-      
-        <li>
-          <a href=/2012/03/07/why-node.html>Why Learn Node.js?</a>
-        </li>
-      
-        <li>
-          <a href=/2012/02/10/living-on-linode.html>Living on Linode</a>
-        </li>
-      
-        <li>
-          <a href=/2012/01/30/different-stacks-treehouse-code-challenges.html>Different Stacks: Treehouse Code Challenges</a>
-        </li>
-      
-      </ul>
-    </article>
-    <article class="twitter">
-      <h3 >
-        Twitter
-      </h3>
-      <script src="http://widgets.twimg.com/j/2/widget.js"></script>
-<script>
-new TWTR.Widget({
-  version: 2,
-  type: 'profile',
-  rpp: 3,
-  interval: 30000,
-  width: 'auto',
-  height: 300,
-  theme: {
-    shell: {
-      background: '#0064CD',
-      color: '#FFF'
-    },
-    tweets: {
-      background: '#FFFFFF',
-      color: '#333333',
-      links: '#0064CD'
-    }
-  },
-  features: {
-    scrollbar: false,
-    loop: false,
-    live: false,
-    behavior: 'all'
-  }
-}).render().setUser('jimrhoskins').start();
-</script>
-
-    </article>
-    <article class="treehouse">
-      <h3 >Treehouse</h3>
-      <iframe width="100%" height="320" src="http://goj.im:3333/v1/p/jim?order=recent&amp;count=3&amp;hide_joined=1&amp;view=list" frameborder="0"></iframe>
-    </article>
-  </div>
-</aside>
-
-        aaa
-      </div>
-      <section class="comments row">
-        <div id="disqus_thread" class="span10"></div>
-        <script type="text/javascript">
-            var disqus_shortname = 'jimhoskins';
-            var disqus_developer = window.location.host.match(/localhost/);
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      </section>
-    </section>
+    <script>
+      (function(d, t) {
+          var g = d.createElement(t),
+              s = d.getElementsByTagName(t)[0];
+          g.src = '//hnbutton.appspot.com/static/hn.js';
+          s.parentNode.insertBefore(g, s);
+      }(document, 'script'));
+    </script>
   </body>
 </html>

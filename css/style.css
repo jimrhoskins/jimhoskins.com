@@ -1,0 +1,266 @@
+@import url('./normalize.css');
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin-left: 250px;
+  padding-left: 20px;
+
+  max-width: 650px;
+
+  font-size: 1.1em;
+  line-height: 1.5em;
+
+  font-family: 'Mako', sans-serif;
+  background: #FFF url('http://subtlepatterns.com/patterns/furley_bg.png');
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Oxygen', sans-serif;
+}
+
+h1 {
+  line-height: 1.2em;
+  margin: 20px 0 10px;
+}
+
+a {
+  color: #237CBC;
+}
+
+
+a:visited {
+  color: #8BB2D3;
+}
+
+a:focus {
+  background: #237CBC;
+  color: #FFF;
+}
+
+blockquote {
+  margin: 1em 40px 1em 20px;
+  border-left: solid 5px #237CBC;
+  padding-left: 15px;
+
+}
+
+.siteHeader {
+  background: #202c4b url('http://subtlepatterns.com/patterns/square_bg.png');
+  color: #dde4e5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  border-right: solid 1px rgba(255,255,255,0.7);
+  box-shadow: -3px 0 20px #000;
+}
+
+.siteHeader img {
+  width: 210px;
+  margin: 20px;
+  border: solid 1px rgba(255, 255,255,0.3);
+}
+
+
+
+.siteHeader > hgroup {
+  margin: 00px 10px 30px;
+  text-align: center;
+}
+
+.siteHeader h1 {
+  margin: 0;
+}
+
+.siteHeader  h2 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.siteHeader a {
+  color: #FFF;
+  text-decoration: none;
+}
+
+.siteHeader nav ul {
+  margin: 0 20px 50px;
+  padding: 0;
+}
+
+.siteHeader nav li {
+  border-bottom: solid 1px #8d9495;
+  padding: 5px 20px;
+}
+
+.siteHeader nav a {
+  display: block;
+  opacity: 0.8;
+}
+
+.siteHeader nav a:hover,
+.siteHeader nav a:focus {
+  opacity: 1;
+  /*text-shadow: 2px 2px 5px #FFF ;*/
+}
+
+.siteHeader li:last-child {
+  border-bottom: 0;
+}
+
+ul.me {
+  margin: 10px 20px;
+  padding: 0;
+  position: absolute;
+  bottom: 0;
+}
+
+ul.me li {
+  float: left;
+  width: 33.3333%;
+  text-indent: -9000em;
+}
+
+ul.me li a {
+  display: block;
+  width: 100%;
+  height: 32px;
+  opacity: 0.5;
+}
+
+ul.me li a:hover,
+ul.me li a:active {
+  opacity: 1;
+}
+
+ul.me a.github {
+  background: url('/images/icons/github.png') center center no-repeat;
+}
+ul.me a.twitter {
+  background: url('/images/icons/twitter.png') center center no-repeat;
+}
+ul.me a.treehouse {
+  background: url('/images/icons/treehouse.png') center center no-repeat;
+}
+
+
+
+
+
+.date {
+  color: #888;
+}
+
+.sharing {
+  float: right;
+}
+
+
+@media screen and (max-width: 799px) {
+  body {
+    margin: 80px 0 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .siteHeader {
+    position: absolute;
+    bottom: auto;
+    right: 0;
+    width: 100%;
+    zoom: 1;
+  }
+
+  .siteHeader img {
+    display: none;
+  }
+
+  .siteHeader hgroup {
+    text-align: left;
+    float: left;
+    margin: 10px;
+  }
+
+  .siteHeader h1 {font-size: 1.5em}
+
+  .siteHeader h2 {}
+  
+  .siteHeader nav li {
+    float: right;
+    border-bottom: 0;
+    padding: 0 5px;
+    text-decoration: underline;
+  }
+
+  .siteHeader nav ul{
+    margin-bottom: 0;
+  }
+
+  ul.me {
+    float: right;
+    clear: right;
+    position: relative;
+    width: 150px;
+  }
+
+  body > article {
+    padding: 10px;
+  }
+
+}
+
+@media screen and (max-width: 450px) {
+  body { margin-top: 160px;}
+  .siteHeader hgroup,
+  .siteHeader nav,
+  .siteHeader nav ul,
+  .siteHeader ul.me,
+  .siteHeader nav li {
+    float: none;
+  }
+
+  .siteHeader nav li ,
+  ul.me li {
+    float: none;
+    display: inline-block;
+  }
+
+  ul.me { 
+    margin: 10px 5px;
+  }
+
+  .siteHeader nav ul {
+    margin: 5px;}
+
+  ul.me li { width: 30%;}
+
+}
+
+@media screen and (max-height: 430px) {
+  .siteHeader {
+    position: absolute;
+    bottom: auto;
+  }
+
+}
+
+* {
+  -webkit-transition: all 300ms ease-in-out ;
+}
+
+
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
